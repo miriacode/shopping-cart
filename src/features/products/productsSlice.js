@@ -81,7 +81,7 @@ const productsSlice = createSlice({
     },
     extraReducers(builder){
         builder
-            //Get All
+            //GET ALL
             .addCase(fetchAllProducts.pending, (state,action) => {
                 state.products.status = "loading"
             })
@@ -93,7 +93,7 @@ const productsSlice = createSlice({
                 state.products.status = "failed"
                 state.products.error = action.error.message
             })
-            //Get One
+            //GET ONE
             .addCase(fetchOneProduct.pending, (state,action) => {
                 state.product.status = "loading"
             })
@@ -105,10 +105,11 @@ const productsSlice = createSlice({
                 state.product.status = "failed"
                 state.product.error = action.error.message
             })
-            // .addCase(addNewProduct.fulfilled, (state,action) => {
-            //     state.status = "succeeded"
-            //     //pensar si se debe agregar al state desde aqui
-            // })
+            //POST
+            .addCase(addNewProduct.fulfilled, (state,action) => {
+                state.status = "succeeded"
+                //pensar si se debe agregar al state desde aqui
+            })
     }
 })
 
