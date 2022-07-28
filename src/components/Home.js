@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { selectAllProducts, getProductsStatus, getProductsError, fetchAllProducts } from "../features/products/productsSlice";
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 
 const Home = () => {
 
@@ -19,9 +20,9 @@ const Home = () => {
     if (productsStatus === 'loading') {
         content = <p>Loading...</p>;
     } else if (productsStatus === 'succeeded') {
-        content = products.map((p)=><p>{p.title}</p>);
+        content = products.map((p)=><Link to={`/products/${p.id}`}><p>{p.title} {p.price}</p></Link>);
     } else if (productsStatus === 'failed') {
-        content = <p>Error</p>;
+        content = <p>{error}</p>;
     }
 
   return (
