@@ -4,9 +4,16 @@ import axios from 'axios';
 const URL = "https://api.escuelajs.co/api/v1/products"
 
 const initialState = {
-    products: [],
-    status: 'idle',
-    error: null,
+    products:{
+        products: [],
+        status: 'idle',
+        error: null,
+    },
+    product:{
+        product: {},
+        status: 'idle',
+        error: null,
+    }
 }
 
 export const fetchAllProducts = createAsyncThunk('products/fetchAllProducts', async ()=>{
@@ -23,7 +30,7 @@ export const fetchOneProduct = createAsyncThunk('products/fetchOneProduct', asyn
     try {
         const response = await axios.get(`${URL}/${id}`);
         console.log(response)
-        return response
+        return response.data
     }catch(err){
         return err.message
     }
@@ -74,27 +81,44 @@ const productsSlice = createSlice({
     },
     extraReducers(builder){
         builder
+            //Get All
             .addCase(fetchAllProducts.pending, (state,action) => {
-                state.status = "loading"
+                state.products.status = "loading"
             })
             .addCase(fetchAllProducts.fulfilled, (state,action) => {
-                state.status = "succeeded"
-                state.products = state.products.concat(action.payload)
+                state.products.status = "succeeded"
+                state.products.products = state.products.products.concat(action.payload)
             })
             .addCase(fetchAllProducts.rejected, (state,action) => {
-                state.status = "failed"
-                state.error = action.error.message
+                state.products.status = "failed"
+                state.products.error = action.error.message
             })
-            .addCase(addNewProduct.fulfilled, (state,action) => {
-                state.status = "succeeded"
-                //pensar si se debe agregar al state desde aqui
+            //Get One
+            .addCase(fetchOneProduct.pending, (state,action) => {
+                state.product.status = "loading"
             })
+            .addCase(fetchOneProduct.fulfilled, (state,action) => {
+                state.product.status = "succeeded"
+                state.product.product = action.payload
+            })
+            .addCase(fetchOneProduct.rejected, (state,action) => {
+                state.product.status = "failed"
+                state.product.error = action.error.message
+            })
+            // .addCase(addNewProduct.fulfilled, (state,action) => {
+            //     state.status = "succeeded"
+            //     //pensar si se debe agregar al state desde aqui
+            // })
     }
 })
 
 
-export const selectAllProducts = (state) => state.products.products;
-export const getProductsStatus = (state) => state.products.status;
-export const getProductsError = (state) => state.products.error;
+export const selectAllProducts = (state) => state.products.products.products;
+export const getProductsStatus = (state) => state.products.products.status;
+export const getProductsError = (state) => state.products.products.error;
+
+export const selectOneProduct = (state) => state.products.product.product;
+export const getProductStatus = (state) => state.products.product.status;
+export const getProductError = (state) => state.products.product.error;
 
 export default productsSlice.reducer

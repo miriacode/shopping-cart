@@ -1,9 +1,26 @@
-import React from 'react'
+// import React from 'react'
+// import { useParams, Link} from 'react-router-dom'
 
-const NewProduct = () => {
-  return (
-    <div>NewProduct</div>
-  )
-}
+// import { fetchOneProduct } from "../features/products/productsSlice";
+// import { useDispatch, useSelector } from 'react-redux'
 
-export default NewProduct
+
+// const NewProduct = () => {
+  
+//   // const {id} = useParams()
+
+//   // const dispatch = useDispatch();
+
+//   // useEffect(() => {
+//   //   dispatch(fetchOneProduct())
+//   //   //.unwrap
+//   // }, [])
+  
+//   return (
+//     <div>
+//       dddddddd
+//     </div>
+//   )
+// }
+
+// export default NewProduct

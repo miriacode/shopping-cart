@@ -14,7 +14,7 @@ function App() {
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>}/>
             <Route path="/products/:id" element={<ViewProduct/>}/>
-            <Route path="/products/new/:id" element={<NewProduct/>}/>
+            <Route path="/products/new" element={<NewProduct/>}/>
             <Route path="/products/edit/:id" element={<EditProduct/>}/>
             <Route path="*" element={<Navigate replace to="/" />} /> 
           </Route>

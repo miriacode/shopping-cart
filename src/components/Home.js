@@ -27,6 +27,7 @@ const Home = () => {
 
   return (
     <div>
+      {console.log(error)}
       {content}
     </div>
   )
