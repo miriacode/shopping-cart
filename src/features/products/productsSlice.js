@@ -48,8 +48,8 @@ export const addNewProduct = createAsyncThunk('products/addNewProduct', async (p
 
 export const updateProduct = createAsyncThunk('products/updateProduct', async (product)=>{
     try {
-        const {id} = product
-        const response = await axios.put(`${URL}/${id}`,product)
+        const {id, ...restOfProduct} = product
+        const response = await axios.put(`${URL}/${id}`,restOfProduct)
         console.log(response)
         return response 
     }catch(err){
@@ -107,7 +107,20 @@ const productsSlice = createSlice({
             })
             //POST
             .addCase(addNewProduct.fulfilled, (state,action) => {
-                state.status = "succeeded"
+                // console.log(action.payload.data)
+                state.products.status = "succeeded"
+                state.products.products.push(action.payload.data)
+                //pensar si se debe agregar al state desde aqui
+            })
+            //PUT
+            .addCase(updateProduct.fulfilled, (state,action) => {
+                console.log(action.payload.data)
+                state.products.status = "succeeded"
+                const { id } = action.payload.data;
+                const products = state.products.products.filter(product => product.id !== id);
+                
+                state.products.products = [...products, action.payload.data]
+                // state.products.products[(action.payload.data.id)-1] = action.payload.data
                 //pensar si se debe agregar al state desde aqui
             })
     }

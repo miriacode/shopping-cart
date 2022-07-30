@@ -14,7 +14,8 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchAllProducts())
     //.unwrap
-  }, [])
+    console.log("vuelvo a la pag")
+  }, [dispatch])
 
   let content;
     if (productsStatus === 'loading') {
