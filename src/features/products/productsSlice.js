@@ -13,6 +13,9 @@ const initialState = {
         product: {},
         status: 'idle',
         error: null,
+    },
+    shopppingCart:{
+        products: [],
     }
 }
 
@@ -117,9 +120,14 @@ const productsSlice = createSlice({
                 console.log(action.payload.data)
                 state.products.status = "succeeded"
                 const { id } = action.payload.data;
+                const index = state.products.products.findIndex(obj=>{return obj.id ===id})
                 const products = state.products.products.filter(product => product.id !== id);
+                console.log(index)
+                // state.products.products = [...products, action.payload.data]
                 
-                state.products.products = [...products, action.payload.data]
+                state.products.products = [...products]
+                state.products.products.splice(index,0,action.payload.data)
+                
                 // state.products.products[(action.payload.data.id)-1] = action.payload.data
                 //pensar si se debe agregar al state desde aqui
             })
